@@ -96,7 +96,7 @@
 <script setup lang="ts">
 const route = useRoute();
 const courseSlug = route.params.courseSlug as string;
-const { course, prevCourse, nextCourse } = useCourse(courseSlug);
+const { course, prevCourse, nextCourse } = (await useCourse(courseSlug)) || {};
 console.log('[courseSlug].vue 컴포넌트 setup hooks');
 
 // if (!course) {
@@ -116,9 +116,9 @@ definePageMeta({
   // keepalive: true,
   alias: ['/lecture/:courseSlug'],
   // validate: (route) => {
-  middleware: (route) => {
+  middleware: async (route) => {
     const courseSlug = route.params.courseSlug as string;
-    const { course } = useCourse(courseSlug);
+    const { course } = (await useCourse(courseSlug)) || {};
     if (!course) {
       // return navigateTo('/');
       // return false;

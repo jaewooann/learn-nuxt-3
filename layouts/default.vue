@@ -42,6 +42,7 @@
           </q-list>
         </q-btn-dropdown>
         <q-separator dark vertical />
+        <!-- <ClientOnly> -->
         <NuxtLink
           v-if="!isAuthenticated"
           v-slot="{ navigate }"
@@ -64,20 +65,25 @@
           no-caps
           @click="signOut()"
         />
+        <!-- </ClientOnly> -->
       </q-toolbar>
     </q-header>
     <q-page-container :style="pageContainerStyle">
+      <!-- <ClientOnly> -->
       <q-banner v-if="isAuthenticated" class="bg-primary text-white">
         {{ authUser }}
       </q-banner>
+      <!-- </ClientOnly> -->
       <slot></slot>
     </q-page-container>
   </q-layout>
 </template>
 
 <script setup lang="ts">
-const { authUser, isAuthenticated } = useAuthUser();
-const { signOut } = useAuth();
+const authStore = useAuthStore();
+const { user: authUser, isAuthenticated } = storeToRefs(authStore);
+const { signOut } = authStore;
+
 const pageContainerStyle = computed(() => ({
   maxWidth: '1080px',
   margin: '0 auto',
@@ -105,4 +111,6 @@ const { locale } = useI18n();
 const selectedLanguageName = computed(
   () => languages.value.find((lang) => lang.code === locale.value)?.name,
 );
+
+watch(locale, (val) => (useCookie('locale').value = val));
 </script>

@@ -5,7 +5,12 @@ export default defineNuxtConfig({
     shim: false,
     typeCheck: true,
   },
-  modules: ['nuxt-quasar-ui'],
+  modules: [
+    'nuxt-quasar-ui',
+    '@pinia/nuxt',
+    '@pinia/nuxt', // needed
+    '@pinia-plugin-persistedstate/nuxt',
+  ],
   quasar: {
     plugins: ['Notify'],
     config: {
@@ -21,5 +26,12 @@ export default defineNuxtConfig({
         imports: ['useI18n'],
       },
     ],
+  },
+  ssr: true,
+  app: {
+    head: {
+      title: 'Vue & Nuxt 강의',
+      meta: [{ name: 'description', content: '짐코딩 Vue & Nuxt 강의입니다.' }],
+    },
   },
 });
