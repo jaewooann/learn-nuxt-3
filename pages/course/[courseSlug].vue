@@ -1,5 +1,11 @@
 <template>
   <div>
+    <!-- 
+    <Head>
+      <Title>{{ title }}</Title>
+      <Meta name="description" :content="description" />
+    </Head>
+    -->
     <AppCard>
       <template #header>
         <div class="text-h5 text-weight-medium">{{ course?.title }}</div>
@@ -97,7 +103,14 @@
 const route = useRoute();
 const courseSlug = route.params.courseSlug as string;
 const { course, prevCourse, nextCourse } = (await useCourse(courseSlug)) || {};
-console.log('[courseSlug].vue 컴포넌트 setup hooks');
+
+// const title = computed(() => course?.title);
+// const description = computed(() => course?.content);
+
+useSeoMeta({
+  title: () => course?.title || '',
+  description: () => course?.content || '',
+});
 
 // if (!course) {
 //   throw createError({
@@ -108,6 +121,7 @@ console.log('[courseSlug].vue 컴포넌트 setup hooks');
 // }
 
 // const title = ref('');
+console.log('[courseSlug].vue 컴포넌트 setup hooks');
 definePageMeta({
   key: (route) => route.fullPath,
   // title: title.value,
