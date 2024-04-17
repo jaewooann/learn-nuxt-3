@@ -8,9 +8,9 @@ export default defineNuxtConfig({
   modules: [
     'nuxt-quasar-ui',
     '@pinia/nuxt',
-    '@pinia/nuxt', // needed
     '@pinia-plugin-persistedstate/nuxt',
     '@nuxtjs/i18n',
+    '@vueuse/nuxt',
   ],
   i18n: {
     locales: ['en', 'ko'], // URL 경로 접두사에 사용됨
@@ -43,6 +43,13 @@ export default defineNuxtConfig({
     head: {
       title: 'Vue & Nuxt 강의',
       meta: [{ name: 'description', content: '짐코딩 Vue & Nuxt 강의입니다.' }],
+    },
+  },
+  runtimeConfig: {
+    authCookieName: '__user',
+    jwtSecretKey: 'superkey',
+    public: {
+      clientConfigValue: 'test',
     },
   },
 });

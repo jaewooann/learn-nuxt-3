@@ -1,5 +1,6 @@
 export default defineEventHandler((event) => {
-  deleteCookie(event, '__user');
+  const config = useRuntimeConfig();
+  deleteCookie(event, config.authCookieName);
 
   return {
     user: null,
